@@ -1,0 +1,51 @@
+@import "./config";
+@import "./header";
+@import "./footer";
+@import "./form-ui";
+@import "./cards";
+@import "./not_found";
+
+body {
+  direction: rtl;
+  font-family: "Zain", serif;
+  background-color: var(--white);
+
+  main {
+    min-height: calc(100vh - 72.8px);
+  }
+
+  @import "./home";
+  @import "./auth";
+  @import "./services";
+  @import "./orders&settings";
+  @import "./order-details";
+
+  &.en {
+    direction: ltr;
+    font-family: "Outfit", sans-serif;
+    .settings-list .settings-item .arrow {
+      transform: scaleX(-1);
+    }
+    .profile-container .profile-form .input-field .input-wrapper .input-icon {
+      right: auto;
+      left: 10px;
+    }
+    .profile-container
+      .profile-form
+      .input-field
+      .input-wrapper
+      input.form-control {
+      padding-left: 40px;
+    }
+    input[type="email"] {
+      text-align: left;
+    }
+    .orderStatus .progress_indicator {
+      right: initial;
+      left: 0;
+    }
+  }
+  input[type="email"] {
+    text-align: right;
+  }
+}

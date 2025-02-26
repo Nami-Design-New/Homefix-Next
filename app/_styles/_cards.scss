@@ -1,0 +1,357 @@
+.work-card {
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  transition: transform 0.3s ease-in-out;
+  width: 100%;
+  position: relative;
+  text-align: right;
+  cursor: pointer;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+
+  &__image {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    display: block;
+  }
+
+  &__content {
+    position: absolute;
+    bottom: -100%;
+    left: 0;
+    width: 100%;
+    background: var(--gray-light);
+    color: var(--white);
+    border-bottom: 8px solid var(--second);
+    padding: 15px;
+    transition: bottom 0.4s ease-in-out;
+    text-align: center;
+  }
+
+  &__category {
+    font-size: 12px;
+    color: var(--main);
+
+    margin-bottom: 5px;
+  }
+
+  &__title {
+    font-size: 16px;
+    font-weight: bold;
+  }
+
+  &:hover &__content {
+    bottom: 0;
+  }
+}
+
+.order-card {
+  background: #f9f9f9;
+  padding: 16px 24px;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+
+  .order-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .details {
+      color: var(--second);
+      cursor: pointer;
+    }
+    .service-icon {
+      background: var(--white);
+      padding: 8px 16px;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 14px;
+      img {
+        width: 24px;
+        height: 24px;
+        object-fit: contain;
+      }
+    }
+  }
+
+  .order-content {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: space-between;
+    padding: 10px 0;
+
+    .order-info {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-start;
+      gap: 12px;
+      margin-top: 12px;
+
+      p {
+        margin: 0;
+        font-size: 16px;
+        color: #333;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        text-align: start;
+        margin-inline-end: 12px;
+
+        i {
+          color: var(--main);
+        }
+      }
+    }
+  }
+
+  .canceled,
+  .complete {
+    background-color: #f8d7da;
+    color: #d9534f;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 50px;
+    font-size: 14px;
+    font-weight: bold;
+    width: 100%;
+    margin-top: 10px;
+    text-align: start;
+  }
+
+  .complete {
+    background: #effaff;
+    color: #479991;
+  }
+}
+
+.service-card {
+  border: none;
+  text-align: center;
+  padding: 24px;
+  height: 100%;
+  border-radius: 16px;
+  transition: 0.3s ease-in-out;
+  background: var(--third);
+  @media screen and (max-width: 576px) {
+    padding: 16px;
+  }
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.15);
+  }
+
+  .service-image {
+    width: 100%;
+    height: 80px;
+    overflow: hidden;
+    margin-bottom: 16px;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      transition: 0.3s ease-in-out;
+    }
+  }
+
+  .service-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 10px;
+    color: var(--second);
+  }
+
+  .service-subtitle {
+    font-size: 1rem;
+    margin-bottom: 0;
+    color: var(--grey);
+    @media screen and (max-width: 576px) {
+      font-size: 14px;
+    }
+  }
+}
+// OffersCard
+.driverCard {
+  background: #fff;
+  padding: 16px;
+  gap: 16px;
+  border-radius: 10px;
+  border: 0;
+
+  .driverInfo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .driverImage {
+    width: 45px;
+    height: 45px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid #ddd;
+  }
+
+  .driverName {
+    font-weight: bold;
+    font-size: 1rem;
+    margin-bottom: 2px;
+  }
+
+  .rating {
+    font-size: 1rem;
+
+    i {
+      margin-right: 3px;
+      font-size: 1rem;
+    }
+
+    .unfilled {
+      color: #ccc;
+    }
+
+    .filled {
+      color: #ffc107;
+    }
+  }
+
+  .price {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 8px;
+  }
+
+  .buttonGroup {
+    display: flex;
+    gap: 12px;
+    justify-content: space-between;
+
+    .acceptBtn,
+    .rejectBtn {
+      flex: 1;
+      padding: 12px 0;
+      text-align: center;
+    }
+
+    .acceptBtn {
+      background: #3b9586;
+      color: white;
+      border-radius: 12px;
+      font-size: 0.9rem;
+    }
+
+    .rejectBtn {
+      border: 1px solid #000;
+      border-radius: 12px;
+      font-size: 0.9rem;
+      background: white;
+      color: black;
+    }
+  }
+}
+//orderinfo
+.orderInfo {
+  background: transparent;
+  border: none;
+
+  .order-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .order-category {
+      background: #e4e6e8;
+      color: var(--gray-light);
+      padding: 5px 10px;
+      border-radius: var(--border-radius);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+
+      .category-icon {
+        width: 16px;
+        height: 16px;
+      }
+    }
+
+    .order-id {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+
+      p {
+        font-weight: bold;
+        color: var(--main);
+        margin: 0;
+      }
+    }
+  }
+
+  &.technical .order-header {
+    width: 100%;
+    .order-info {
+      gap: 12px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      margin-bottom: 24px;
+    }
+    p {
+      margin: 0;
+    }
+    .order-info img {
+      filter: brightness(0) invert(0);
+    }
+  }
+
+  .order-location {
+    display: flex;
+    align-items: center;
+    color: var(--main);
+    margin: 8px 0px;
+  }
+
+  .mapPlaceholder {
+    width: 100%;
+    height: 300px;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 10px;
+    border: 1px solid var(--white);
+  }
+
+  .imagesRow {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+
+    .orderImage {
+      width: 120px;
+      height: 120px;
+      background: #fff;
+      padding: 4px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+  }
+
+  .order-description {
+    font-size: 16px;
+    margin: 8px 0px;
+  }
+
+  .audioSection {
+    display: flex;
+    align-items: center;
+  }
+}
