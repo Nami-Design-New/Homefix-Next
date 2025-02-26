@@ -8,9 +8,9 @@ export const routing = defineRouting({
   // Used when no locale matches
   defaultLocale: "en",
   pathnames: {
-    "/home": {
-      en: "/home",
-      ar: "/الرئيسيه",
+    "/aboutus": {
+      en: "/about-us",
+      ar: "/عن-المنصه",
     },
   },
 });

@@ -1,9 +1,8 @@
 import { getTranslations } from "next-intl/server";
 import Image from "next/image";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 import LanguageDropDown from "./header/LanguageDropDown";
 import UserDropDown from "./header/UserDropDown";
-
 
 export default async function Header() {
   const t = await getTranslations("common");
@@ -12,7 +11,13 @@ export default async function Header() {
     <header>
       <nav className="container">
         <Link href="/" className="logo">
-          <Image src={"/images/logo.svg"} height="36" width={125} alt="logo" />
+          <Image
+            src={"/images/logo.svg"}
+            height={36}
+            width={125}
+            alt="logo"
+            priority
+          />
         </Link>
 
         <div className="nav_links">

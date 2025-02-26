@@ -15,8 +15,9 @@ export default async function Footer() {
                 <Image
                   src={"/images/logo.svg"}
                   width={125}
-                  height={36}
+                  height={48}
                   alt="logo"
+                  priority
                 />
               </Link>
               <p>{t("footerTitle")}</p>
