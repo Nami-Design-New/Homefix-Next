@@ -6,11 +6,55 @@ export const routing = defineRouting({
   locales: ["en", "ar"],
 
   // Used when no locale matches
-  defaultLocale: "en",
+  defaultLocale: "en",ad
   pathnames: {
+    "/": {
+      en: "/",
+      ar: "/",
+    },
     "/aboutus": {
       en: "/about-us",
-      ar: "/عن-المنصه",
+      ar: "/عن-المنصة",
+    },
+    "/order-service": {
+      en: "/order-service",
+      ar: "/طلب-خدمة",
+    },
+    "/my-orders": {
+      en: "/my-orders",
+      ar: "/طلباتي",
+    },
+    "/my-orders/:id": {
+      en: "/my-orders/:id",
+      ar: "/طلباتي/:id",
+    },
+    "/settings": {
+      en: "/settings",
+      ar: "/الإعدادات",
+    },
+    "/terms-and-conditions": {
+      en: "/terms-and-conditions",
+      ar: "/الشروط-والأحكام",
+    },
+    "/privacy": {
+      en: "/privacy",
+      ar: "/الخصوصية",
+    },
+    "/fqs": {
+      en: "/faqs",
+      ar: "/الأسئلة-الشائعة",
+    },
+    "/edit-profile": {
+      en: "/edit-profile",
+      ar: "/تعديل-الملف-الشخصي",
+    },
+    "/contactus": {
+      en: "/contact-us",
+      ar: "/اتصل-بنا",
+    },
+    "/notifications": {
+      en: "/notifications",
+      ar: "/الإشعارات",
     },
   },
 });
