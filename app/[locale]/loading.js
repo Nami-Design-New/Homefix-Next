@@ -1,7 +1,9 @@
-import React from 'react'
+import React from "react";
 
 export default function loading() {
   return (
-    <div>loading</div>
-  )
+    <div className="preloader">
+      <div className="preloaderImg" />
+    </div>
+  );
 }

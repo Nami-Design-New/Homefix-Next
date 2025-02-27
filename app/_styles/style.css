@@ -2118,7 +2118,7 @@ label div {
   align-items: center;
 }
 
-.page_not_found {
+.page-not-found {
   width: 100vw;
   height: 100vh;
   display: flex;
@@ -2129,30 +2129,30 @@ label div {
   direction: rtl;
   flex-direction: row-reverse;
 }
-[dir=ltr] .page_not_found {
+[dir=ltr] .page-not-found {
   direction: ltr;
   flex-direction: row;
 }
-.page_not_found .cog-wheel1,
-.page_not_found .cog-wheel2 {
+.page-not-found .cog-wheel1,
+.page-not-found .cog-wheel2 {
   transform: scale(0.7);
 }
 @media screen and (max-width: 576px) {
-  .page_not_found .cog-wheel1,
-  .page_not_found .cog-wheel2 {
+  .page-not-found .cog-wheel1,
+  .page-not-found .cog-wheel2 {
     transform: scale(0.6);
   }
 }
-.page_not_found h1 {
+.page-not-found h1 {
   color: #142833;
 }
-.page_not_found .first-four {
+.page-not-found .first-four {
   position: relative;
   right: -16vmin;
   font-size: 40vmin;
   font-family: "Poppins", sans-serif;
 }
-.page_not_found .second-four {
+.page-not-found .second-four {
   position: relative;
   left: -18vmin;
   z-index: -1;
@@ -2160,20 +2160,20 @@ label div {
   font-family: "Poppins", sans-serif;
 }
 @media screen and (max-width: 576px) {
-  .page_not_found .first-four,
-  .page_not_found .second-four {
+  .page-not-found .first-four,
+  .page-not-found .second-four {
     font-size: 35vmin;
   }
 }
-.page_not_found [dir=ltr] .first-four {
+.page-not-found [dir=ltr] .first-four {
   right: unset;
   left: -16vmin;
 }
-.page_not_found [dir=ltr] .second-four {
+.page-not-found [dir=ltr] .second-four {
   left: unset;
   right: -18vmin;
 }
-.page_not_found .wrong-para {
+.page-not-found .wrong-para {
   position: absolute;
   bottom: 15vmin;
   padding: 3vmin 0vmin;
@@ -2181,11 +2181,11 @@ label div {
   color: #092532;
 }
 @media screen and (max-width: 576px) {
-  .page_not_found .wrong-para {
+  .page-not-found .wrong-para {
     bottom: 40vmin;
   }
 }
-.page_not_found .back-home-link {
+.page-not-found .back-home-link {
   display: block;
   font-size: 16px;
   color: var(--white);
@@ -2199,11 +2199,11 @@ label div {
   text-decoration: none;
 }
 @media screen and (max-width: 576px) {
-  .page_not_found .back-home-link {
+  .page-not-found .back-home-link {
     bottom: 30vmin;
   }
 }
-.page_not_found [dir=ltr] .back-home-link {
+.page-not-found [dir=ltr] .back-home-link {
   right: unset;
   left: 48%;
   transform: translateX(-48%);

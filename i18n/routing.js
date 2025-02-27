@@ -8,10 +8,6 @@ export const routing = defineRouting({
   // Used when no locale matches
   defaultLocale: "en",
   pathnames: {
-    "/": {
-      en: "/",
-      ar: "/",
-    },
     "/aboutus": {
       en: "/about-us",
       ar: "/عن-المنصة",
