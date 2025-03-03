@@ -2,8 +2,10 @@
 
 import React from "react";
 import { Modal } from "react-bootstrap";
+import { useSelector } from "react-redux";
 
 export default function AuthModal() {
+  const { show } = useSelector((state) => state.showAuthModal);
   return (
     <Modal centered show={show} className="authModal" backdrop="static">
       <Modal.Body>

@@ -7,10 +7,10 @@ import "../_styles/all.min.css";
 // Bootstrap styles
 import "bootstrap/dist/css/bootstrap.min.css";
 //  styles
-import "swiper/css";
-import "../_styles/style.css";
 import { Toaster } from "sonner";
+import "swiper/css";
 import ReduxProvider from "../_redux/Provider";
+import "../_styles/style.css";
 
 export async function generateMetadata({ params }) {
   const { locale } = (await params) || { locale: "en" };
@@ -67,10 +67,6 @@ export async function generateMetadata({ params }) {
 
 export default async function RootLayout({ children, params }) {
   const { locale } = (await params) || { locale: "en" };
-
-  // if (!routing.locales.includes(locale)) {
-  //   notFound();
-  // }
 
   const messages = await getMessages();
   return (
