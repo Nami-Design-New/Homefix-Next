@@ -4,7 +4,7 @@ import Image from "next/image";
 import React from "react";
 
 export default async function page() {
-  const t = await getTranslations("common");
+  const t = await getTranslations("");
   return (
     <div className="container mt-5">
       <div className="row">

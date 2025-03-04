@@ -5,7 +5,7 @@ import LanguageDropDown from "./header/LanguageDropDown";
 import UserDropDown from "./header/UserDropDown";
 
 export default async function Header() {
-  const t = await getTranslations("common");
+  const t = await getTranslations();
 
   return (
     <header>

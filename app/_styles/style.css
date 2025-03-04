@@ -908,6 +908,9 @@ footer .copy_rights .social_media a:hover {
   height: 52px;
   border-radius: 12px;
   border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 90px;
   color: var(--main);
   cursor: pointer;

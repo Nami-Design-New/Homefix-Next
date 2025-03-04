@@ -7,8 +7,8 @@ axios.defaults.headers.common["Accept"] = "application/json";
 const axiosInstance = axios.create();
 
 axiosInstance.interceptors.request.use(
-  (config) => {
-    const lang = cookies().get("NEXT_LOCALE")?.value || "ar";
+  async (config) => {
+    const lang = (await cookies().get("NEXT_LOCALE")?.value) || "ar";
     config.headers["Accept-Language"] = lang;
     return config;
   },

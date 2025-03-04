@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export default async function Footer() {
   //   const { client } = useSelector((state) => state.clientData);
-  const t = await getTranslations("common");
+  const t = await getTranslations();
   return (
     <footer>
       <div className="container">

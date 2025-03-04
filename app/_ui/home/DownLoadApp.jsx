@@ -5,7 +5,7 @@ import { getTranslations } from "next-intl/server";
 import Image from "next/image";
 
 export default async function DownLoadApp() {
-  const t = await getTranslations("common");
+  const t = await getTranslations();
   return (
     <Container>
       <Row className="p-2">

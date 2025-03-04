@@ -11,6 +11,8 @@ import { Toaster } from "sonner";
 import "swiper/css";
 import ReduxProvider from "../_redux/Provider";
 import "../_styles/style.css";
+import AuthModal from "../_ui/modals/AuthModal";
+import { ReactQueryProvider } from "../_providers/ReactQueryProvider";
 
 export async function generateMetadata({ params }) {
   const { locale } = (await params) || { locale: "en" };
@@ -80,9 +82,12 @@ export default async function RootLayout({ children, params }) {
             position="bottom-right"
           />
           <ReduxProvider>
-            <Header />
-            <main>{children}</main>
-            <Footer />
+            <ReactQueryProvider>
+              <Header />
+              <main>{children}</main>
+              <Footer />
+              <AuthModal />
+            </ReactQueryProvider>
           </ReduxProvider>
         </NextIntlClientProvider>
       </body>

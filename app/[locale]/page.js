@@ -5,7 +5,8 @@ import HowItWorksSection from "../_ui/home/HowItWoeksSection";
 import Services from "../_ui/home/Services";
 import WhyUs from "../_ui/home/WhyUs";
 
-export default async function Home() {
+export default async function Home({ params }) {
+  const { locale } = await params;
   const res = await axiosInstance.get("/homefix/client-home");
   let slider;
   if (res?.data?.code === 200) {

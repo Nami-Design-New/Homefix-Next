@@ -4,7 +4,7 @@ import { useTranslations } from "next-intl";
 import { Dropdown } from "react-bootstrap";
 
 export default function LanguageDropDown() {
-  const t = useTranslations("common");
+  const t = useTranslations();
   const pathname = usePathname();
   return (
     <Dropdown>

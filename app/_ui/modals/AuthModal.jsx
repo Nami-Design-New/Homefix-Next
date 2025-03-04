@@ -1,11 +1,106 @@
 "use client";
 
-import React from "react";
+import { useRouter } from "@/i18n/routing";
+import { useTranslations } from "next-intl";
+import * as yup from "yup";
+import React, { useState } from "react";
 import { Modal } from "react-bootstrap";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import Login from "../auth/Login";
+import { setShowAuthModal } from "@/app/_redux/slices/showAuthModal";
+import UserRegister from "../auth/UserRegister";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import RegisterTechnical from "../auth/RegisterTechnical";
+import ConfirmRegister from "../auth/ConfirmRegister";
+import ForgetPassword from "../auth/ForgetPassword";
 
 export default function AuthModal() {
   const { show } = useSelector((state) => state.showAuthModal);
+  const dispatch = useDispatch();
+  const router = useRouter();
+  const t = useTranslations();
+
+  const [formType, setFormType] = useState("login");
+  const [userType, setUserType] = useState("client");
+  const [step, setStep] = useState(1);
+
+  const registerSchema = yup.object().shape({
+    name: yup.string().required(t("validation.nameRequired")),
+    phone: yup
+      .string()
+      .required(t("validation.phoneRequired"))
+      .matches(/^7\d{8}$/, t("validation.phoneInvalid"))
+      .length(9, t("validation.phoneInvalid")),
+    email: yup
+      .string()
+      .email(t("validation.emailInvalid"))
+      .required(t("validation.emailRequired")),
+    password: yup
+      .string()
+      .required(t("validation.passwordRequired"))
+      .min(8, t("validation.passwordMinLength"))
+      .matches(/[A-Z]/, t("validation.passwordCapitalLetter"))
+      .matches(/[a-z]/, t("validation.passwordSmallLetter")),
+    city_id: yup.string().required(t("validation.cityRequired")),
+  });
+
+  const technicalStepOneSchema = yup.object().shape({
+    name: yup.string().required(t("validation.nameRequired")),
+    phone: yup
+      .string()
+      .required(t("validation.phoneRequired"))
+      .matches(/^7\d{8}$/, t("validation.phoneInvalid"))
+      .length(9, t("validation.phoneInvalid")),
+    email: yup
+      .string()
+      .email(t("validation.emailInvalid"))
+      .required(t("validation.emailRequired")),
+    password: yup
+      .string()
+      .required(t("validation.passwordRequired"))
+      .min(8, t("validation.passwordMinLength"))
+      .matches(/[A-Z]/, t("validation.passwordCapitalLetter"))
+      .matches(/[a-z]/, t("validation.passwordSmallLetter")),
+    city_id: yup.string().required(t("validation.cityRequired")),
+    specialty_id: yup.string().required(t("validation.specialtyRequired")),
+  });
+
+  const technicalStepTwoSchema = yup.object().shape({
+    image: yup.mixed().required(t("validation.imageRequired")),
+    front_national_image: yup.mixed().required(t("validation.imageRequired")),
+    back_national_image: yup.mixed().required(t("validation.imageRequired")),
+  });
+
+  const {
+    register,
+    handleSubmit,
+    watch,
+    reset,
+    formState: { errors, isSubmitting },
+  } = useForm({
+    resolver: yupResolver(
+      userType === "client"
+        ? registerSchema
+        : step === 1
+        ? technicalStepOneSchema
+        : technicalStepTwoSchema
+    ),
+
+    defaultValues: {
+      name: "",
+      phone: "",
+      email: "",
+      password: "",
+      city_id: "",
+      country_code: "+962",
+      specialty_id: "",
+      image: null,
+      front_national_image: null,
+      back_national_image: null,
+    },
+  });
+
   return (
     <Modal centered show={show} className="authModal" backdrop="static">
       <Modal.Body>
@@ -14,7 +109,7 @@ export default function AuthModal() {
           className="closeModal"
           onClick={() => {
             dispatch(setShowAuthModal(false));
-            navigate("/");
+            router.push("/");
             setFormType("login");
             setUserType("client");
           }}
