@@ -9,9 +9,11 @@ import PhoneInput from "../form-elements/PhoneInput";
 import SubmitButton from "../form-elements/SubmitButton";
 import { toast } from "sonner";
 import { setShowAuthModal } from "@/app/_redux/slices/showAuthModal";
+import { useDispatch } from "react-redux";
 
 export default function Login({ setFormType, userType, setUserType }) {
   const t = useTranslations();
+  const dispatch = useDispatch();
   const schema = yup.object().shape({
     phone: yup
       .string()
@@ -59,7 +61,7 @@ export default function Login({ setFormType, userType, setUserType }) {
       const data = await res.json();
       console.log(data);
       if (data.code === 200) {
-        toast.success(res.data.message);
+        toast.success(data.message);
         dispatch(setShowAuthModal(false));
         localStorage.setItem("userType", userType);
       } else {
