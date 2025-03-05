@@ -77,12 +77,12 @@
     height: 52px;
     border-radius: 12px;
     border: 1px solid var(--border);
-    @include centerFlex();
     width: 90px;
     color: var(--main);
     cursor: pointer;
     background: none;
     transition: 0.3s ease-in-out;
+    @include centerFlex();
     &:hover {
       background: var(--second);
       color: #fff;
@@ -107,6 +107,7 @@
       align-items: center;
       gap: 6px;
       flex-wrap: wrap;
+      margin: 0 !important;
       svg,
       i {
         stroke: var(--main);
@@ -133,13 +134,15 @@
       outline: none;
       padding: 8px 12px;
       border-radius: 12px;
-      background: var(--input-bg);
-      border: 1px solid var(--border);
+      background-color: var(--input-bg);
+      border: 1px solid var(--border) !important;
       font-size: 16px;
       box-shadow: none !important;
       &::placeholder {
         font-size: 14px;
       }
+      background-position: top calc(0.7em + 0.1875rem) left
+        calc(0.375em + 0.1875rem);
     }
     textarea {
       height: 140px;
@@ -964,4 +967,8 @@ label {
 
 .form-check-input {
   box-shadow: none !important;
+}
+
+.invalid-feedback {
+  display: block !important;
 }

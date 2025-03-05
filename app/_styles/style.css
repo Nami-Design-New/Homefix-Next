@@ -373,7 +373,7 @@ input[type=number]::-webkit-inner-spin-button {
   display: flex;
   flex-direction: row-reverse;
   border: 1px solid var(--input-stroke);
-  background: var(--input-bg);
+  background-color: var(--input-bg);
   height: 52px;
   border-radius: 12px;
   direction: ltr;
@@ -383,29 +383,29 @@ input[type=number]::-webkit-inner-spin-button {
   height: 100%;
   color: var(--main);
   font-size: 14px;
-  background: var(--input-bg);
+  background-color: var(--input-bg);
   padding: 8px;
   border-radius: 12px;
   direction: ltr;
   border: 0;
 }
 .react-tel-input .flag-dropdown {
-  background: transparent;
+  background-color: transparent;
   border: none;
   position: static;
   border-radius: 12px 0 0 12px;
   min-width: 52px;
 }
 .react-tel-input .flag-dropdown.open {
-  background: var(--input-bg);
+  background-color: var(--input-bg);
   border-radius: 12px;
 }
 .react-tel-input .flag-dropdown.open .selected-flag {
   border-radius: 12px;
-  background: var(--input-bg);
+  background-color: var(--input-bg);
 }
 .react-tel-input .selected-flag {
-  background: transparent;
+  background-color: transparent;
   padding: 0;
   width: 100%;
   border-radius: 12px;
@@ -420,7 +420,7 @@ input[type=number]::-webkit-inner-spin-button {
   border-bottom-color: var(--main);
 }
 .react-tel-input .selected-flag:hover, .react-tel-input .selected-flag:focus {
-  background: var(--input-bg);
+  background-color: var(--input-bg);
 }
 .react-tel-input .country-list {
   width: 100%;
@@ -908,14 +908,14 @@ footer .copy_rights .social_media a:hover {
   height: 52px;
   border-radius: 12px;
   border: 1px solid var(--border);
-  display: flex;
-  align-items: center;
-  justify-content: center;
   width: 90px;
   color: var(--main);
   cursor: pointer;
   background: none;
   transition: 0.3s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .form .back_btn:hover {
   background: var(--second);
@@ -939,6 +939,7 @@ footer .copy_rights .social_media a:hover {
   align-items: center;
   gap: 6px;
   flex-wrap: wrap;
+  margin: 0 !important;
 }
 .form .input-field label svg,
 .form .input-field label i {
@@ -965,10 +966,11 @@ footer .copy_rights .social_media a:hover {
   outline: none;
   padding: 8px 12px;
   border-radius: 12px;
-  background: var(--input-bg);
-  border: 1px solid var(--border);
+  background-color: var(--input-bg);
+  border: 1px solid var(--border) !important;
   font-size: 16px;
   box-shadow: none !important;
+  background-position: top calc(0.7em + 0.1875rem) left calc(0.375em + 0.1875rem);
 }
 .form .input-field input::-moz-placeholder, .form .input-field textarea::-moz-placeholder, .form .input-field select::-moz-placeholder {
   font-size: 14px;
@@ -1796,6 +1798,10 @@ label div {
 
 .form-check-input {
   box-shadow: none !important;
+}
+
+.invalid-feedback {
+  display: block !important;
 }
 
 .work-card {
@@ -3850,7 +3856,7 @@ body .star-rating-service input {
 }
 body.en {
   direction: ltr;
-  font-family: "Outfit", sans-serif;
+  font-family: "Open Sans", sans-serif;
 }
 body.en .settings-list .settings-item .arrow {
   transform: scaleX(-1);
@@ -3869,6 +3875,39 @@ body.en .orderStatus .progress_indicator {
   right: initial;
   left: 0;
 }
-body input[type=email] {
-  text-align: right;
+body.en .form .input-field input,
+body.en .form .input-field textarea,
+body.en .form .input-field select {
+  direction: ltr;
+  background-position: top calc(0.7em + 0.1875rem) right calc(0.375em + 0.1875rem);
+}
+body.en .form .back_btn i {
+  transform: scale(-1);
+}
+body.en .closeModal {
+  left: initial;
+  right: 16px;
+}
+body.en .contact_page .contact-form .input-field .input-wrapper input.form-control,
+body.en .contact_page .contact-form .input-field .input-wrapper textarea.form-control {
+  direction: ltr;
+}
+body.en .contact_page .contact-form .input-field .input-wrapper input.form-control[type=email] {
+  padding-inline-end: unset;
+  padding-inline-start: 40px;
+}
+body.en .contact_page .contact-form .input-field .input-wrapper .input-icon {
+  left: 16px;
+  right: unset;
+}
+body.en .profile-container .profile-form .input-field .input-wrapper input.form-control,
+body.en .profile-container .profile-form .input-field .input-wrapper select.form-select {
+  direction: ltr;
+}
+body.en .form .resend-code .timer {
+  direction: rtl !important;
+  justify-content: flex-end !important;
+}
+body.en .profile-container .profile-title .icon {
+  transform: scale(-1);
 }/*# sourceMappingURL=style.css.map */

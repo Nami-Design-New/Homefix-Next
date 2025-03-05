@@ -1,10 +1,13 @@
 import axios from "axios";
 import { cookies } from "next/headers";
-axios.defaults.baseURL = "https://homefixapp.com/api/";
+import { API_URL } from "./constants";
+
 axios.defaults.headers.common["Content-Type"] = "application/json";
 axios.defaults.headers.common["Accept"] = "application/json";
 
-const axiosInstance = axios.create();
+const axiosInstance = axios.create({
+  baseURL: API_URL,
+});
 
 axiosInstance.interceptors.request.use(
   async (config) => {

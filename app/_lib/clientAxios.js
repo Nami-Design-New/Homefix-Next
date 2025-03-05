@@ -1,10 +1,12 @@
 import axios from "axios";
+import { API_URL } from "./constants";
 
-axios.defaults.baseURL = "https://homefixapp.com/api/";
 axios.defaults.headers.common["Content-Type"] = "application/json";
 axios.defaults.headers.common["Accept"] = "application/json";
 
-const clientAxios = axios.create();
+const clientAxios = axios.create({
+  baseURL: API_URL,
+});
 
 clientAxios.interceptors.request.use(
   (config) => {

@@ -379,7 +379,7 @@ input[type="number"] {
   display: flex;
   flex-direction: row-reverse;
   border: 1px solid var(--input-stroke);
-  background: var(--input-bg);
+  background-color: var(--input-bg);
   height: 52px;
   border-radius: 12px;
   direction: ltr;
@@ -388,7 +388,7 @@ input[type="number"] {
     height: 100%;
     color: var(--main);
     font-size: 14px;
-    background: var(--input-bg);
+    background-color: var(--input-bg);
     padding: 8px;
     border-radius: 12px;
     direction: ltr;
@@ -396,23 +396,23 @@ input[type="number"] {
   }
 
   .flag-dropdown {
-    background: transparent;
+    background-color: transparent;
     border: none;
     position: static;
     border-radius: 12px 0 0 12px;
     min-width: 52px;
     &.open {
-      background: var(--input-bg);
+      background-color: var(--input-bg);
       border-radius: 12px;
       .selected-flag {
         border-radius: 12px;
-        background: var(--input-bg);
+        background-color: var(--input-bg);
       }
     }
   }
 
   .selected-flag {
-    background: transparent;
+    background-color: transparent;
     padding: 0;
     width: 100%;
     border-radius: 12px;
@@ -425,7 +425,7 @@ input[type="number"] {
     }
     &:hover,
     &:focus {
-      background: var(--input-bg);
+      background-color: var(--input-bg);
     }
   }
 

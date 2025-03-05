@@ -2,17 +2,15 @@ import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import Footer from "../_ui/Footer";
 import Header from "../_ui/Header";
-// Font Awesome styles
-import "../_styles/all.min.css";
-// Bootstrap styles
-import "bootstrap/dist/css/bootstrap.min.css";
-//  styles
 import { Toaster } from "sonner";
-import "swiper/css";
 import ReduxProvider from "../_redux/Provider";
-import "../_styles/style.css";
 import AuthModal from "../_ui/modals/AuthModal";
 import { ReactQueryProvider } from "../_providers/ReactQueryProvider";
+
+import "@/node_modules/bootstrap/dist/css/bootstrap.min.css";
+import "@/app/_styles/all.min.css";
+import "@/app/_styles/style.css";
+import "swiper/css";
 
 export async function generateMetadata({ params }) {
   const { locale } = (await params) || { locale: "en" };

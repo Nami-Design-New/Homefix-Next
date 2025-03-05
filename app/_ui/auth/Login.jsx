@@ -1,12 +1,14 @@
-import React from "react";
-import SubmitButton from "../form-elements/SubmitButton";
-import { Form } from "react-bootstrap";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { useTranslations } from "next-intl";
-import PhoneInput from "../form-elements/PhoneInput";
-import PasswordField from "../form-elements/PasswordField";
+import { useEffect } from "react";
+import { Form } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
-import { yupResolver } from "@hookform/resolvers/yup";
+import PasswordField from "../form-elements/PasswordField";
+import PhoneInput from "../form-elements/PhoneInput";
+import SubmitButton from "../form-elements/SubmitButton";
+import { toast } from "sonner";
+import { setShowAuthModal } from "@/app/_redux/slices/showAuthModal";
 
 export default function Login({ setFormType, userType, setUserType }) {
   const t = useTranslations();
@@ -39,8 +41,33 @@ export default function Login({ setFormType, userType, setUserType }) {
     },
   });
 
+  useEffect(() => {
+    setValue("type", userType);
+    console.log(userType);
+  }, [userType, setValue]);
+
   const onSubmit = async (formData) => {
-    console.log(formData);
+    try {
+      const res = await fetch("/api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+      const data = await res.json();
+      console.log(data);
+      if (data.code === 200) {
+        toast.success(res.data.message);
+        dispatch(setShowAuthModal(false));
+        localStorage.setItem("userType", userType);
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -77,7 +104,7 @@ export default function Login({ setFormType, userType, setUserType }) {
           label={t("auth.phone")}
           placeholder={t("auth.phone")}
           id="phone"
-          //   countryCode={watch("country_code")}
+          countryCode={watch("country_code")}
           error={errors.phone?.message}
           {...register("phone")}
         />
