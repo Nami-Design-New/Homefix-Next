@@ -10,9 +10,7 @@ export async function POST(request) {
     const payload = await request.json();
     console.log("Payload:", payload);
 
-    const res = await axiosInstance.post("auth/login", {
-      payload,
-    });
+    const res = await axiosInstance.post("auth/login", payload);
     const data = res.data;
     console.log("Response :", res.data);
     console.log("Response status:", res.status);
