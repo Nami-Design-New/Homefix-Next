@@ -6,12 +6,9 @@ export async function POST(request) {
   try {
     console.log("Received login request");
     const payload = await request.json();
-    console.log("Payload:", payload);
 
     const res = await axiosInstance.post("auth/login", payload);
     const data = res.data;
-    console.log("Response :", res.data);
-    console.log("Response status:", res.status);
 
     if (data.code !== 200) {
       console.error("Error response from backend:" + data.message);
@@ -30,6 +27,7 @@ export async function POST(request) {
         sameSite: "lax",
         secure: process.env.NODE_ENV === "production",
       });
+
       cookieStore.set("id", String(userId), {
         path: "/",
         httpOnly: true,

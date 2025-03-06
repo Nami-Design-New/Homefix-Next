@@ -5,7 +5,7 @@ const loginStatus = createSlice({
   initialState: {
     login: {
       token: "",
-      user: {},
+      user: null,
     },
   },
   reducers: {

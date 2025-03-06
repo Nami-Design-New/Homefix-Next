@@ -1,16 +1,17 @@
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
+import { Toaster } from "sonner";
+import { ReactQueryProvider } from "../_providers/ReactQueryProvider";
+import ReduxProvider from "../_redux/Provider";
 import Footer from "../_ui/Footer";
 import Header from "../_ui/Header";
-import { Toaster } from "sonner";
-import ReduxProvider from "../_redux/Provider";
 import AuthModal from "../_ui/modals/AuthModal";
-import { ReactQueryProvider } from "../_providers/ReactQueryProvider";
 
 import "@/node_modules/bootstrap/dist/css/bootstrap.min.css";
 import "@/app/_styles/all.min.css";
 import "@/app/_styles/style.css";
 import "swiper/css";
+import AuthProvider from "../_providers/AuthProvider";
 
 export async function generateMetadata({ params }) {
   const { locale } = (await params) || { locale: "en" };
@@ -69,6 +70,7 @@ export default async function RootLayout({ children, params }) {
   const { locale } = (await params) || { locale: "en" };
 
   const messages = await getMessages();
+
   return (
     <html lang={locale}>
       <body className={`${locale === "en" ? "en" : ""}`}>
@@ -81,10 +83,12 @@ export default async function RootLayout({ children, params }) {
           />
           <ReduxProvider>
             <ReactQueryProvider>
-              <Header />
-              <main>{children}</main>
-              <Footer />
-              <AuthModal />
+              <AuthProvider>
+                <Header />
+                <main>{children}</main>
+                <Footer />
+                <AuthModal />
+              </AuthProvider>
             </ReactQueryProvider>
           </ReduxProvider>
         </NextIntlClientProvider>

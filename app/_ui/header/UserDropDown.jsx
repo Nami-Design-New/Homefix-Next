@@ -5,31 +5,58 @@ import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { Dropdown } from "react-bootstrap";
 import Image from "next/image";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setShowAuthModal } from "@/app/_redux/slices/showAuthModal";
+import ConfirmDeleteAccount from "../modals/ConfirmDeleteAccount";
+import { logout } from "@/app/_lib/actions";
+import { setloginState } from "@/app/_redux/slices/loginStatus";
+import { useRouter } from "@/i18n/routing";
+import { toast } from "sonner";
 
 export default function UserDropDown() {
   const [show, setShow] = useState(false);
-  const isAuthed = false;
+  const login = useSelector((state) => state.loginStatus.login);
   const dispatch = useDispatch();
+  const router = useRouter();
   const t = useTranslations();
   const handleShow = (e) => {
-    // if (!isAuthed) {
-    e.preventDefault();
-    dispatch(setShowAuthModal(true));
-    // }
+    if (!login?.user?.id) {
+      e.preventDefault();
+      dispatch(setShowAuthModal(true));
+    }
   };
-  const performLogout = () => {
-    console.log("Logging out...");
+  const performLogout = async () => {
+    try {
+      const res = await logout();
+      if (res?.code === 200) {
+        dispatch(setloginState({ user: null }));
+        router.push("/");
+        toast.success(res.message);
+      } else {
+        toast.error(res?.message || "Logout failed");
+      }
+    } catch (error) {
+      console.error("Logout error:", error);
+    }
   };
 
   return (
     <Dropdown>
       <Dropdown.Toggle className="rounded_btn">
-        {/* <Image src="/icons/user.svg" alt="user_alt" width={20} height={20} /> */}
-        <i className="fa-regular fa-user" onClick={handleShow}></i>
+        {login?.user?.image ? (
+          <Image
+            className="user_img"
+            width={40}
+            height={40}
+            src={login?.user?.image || ""}
+            alt="user_alt"
+          />
+        ) : (
+          <i className="fa-regular fa-user" onClick={handleShow}></i>
+        )}
       </Dropdown.Toggle>
-      {isAuthed && (
+
+      {login?.user?.id && (
         <Dropdown.Menu>
           <Dropdown.Item as={Link} href="/edit-profile">
             {t("editProfile")}
@@ -39,14 +66,16 @@ export default function UserDropDown() {
             {t("notifications")}
           </Dropdown.Item>
 
-          <Dropdown.Item onClick={performLogout}>{t("logout")}</Dropdown.Item>
+          <Dropdown.Item onClick={() => performLogout()}>
+            {t("logout")}
+          </Dropdown.Item>
 
           <Dropdown.Item onClick={() => setShow(true)}>
             {t("deleteAccount")}
           </Dropdown.Item>
         </Dropdown.Menu>
-      )}{" "}
-      {/* <ConfirmDeleteAccount show={show} setShow={setShow} /> */}
+      )}
+      <ConfirmDeleteAccount show={show} setShow={setShow} />
     </Dropdown>
   );
 }

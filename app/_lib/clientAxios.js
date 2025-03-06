@@ -1,5 +1,5 @@
 import axios from "axios";
-import { API_URL } from "./constants";
+import { API_URL } from "../_utils/constants";
 
 axios.defaults.headers.common["Content-Type"] = "application/json";
 axios.defaults.headers.common["Accept"] = "application/json";

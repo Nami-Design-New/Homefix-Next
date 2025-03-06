@@ -18,7 +18,6 @@ export default function Login({ setFormType, userType, setUserType }) {
   const router = useRouter();
   const dispatch = useDispatch();
   const login = useSelector((state) => state.loginStatus.login);
-  console.log(login);
 
   const schema = yup.object().shape({
     phone: yup
@@ -51,7 +50,6 @@ export default function Login({ setFormType, userType, setUserType }) {
 
   useEffect(() => {
     setValue("type", userType);
-    console.log(userType);
   }, [userType, setValue]);
 
   const onSubmit = async (formData) => {
