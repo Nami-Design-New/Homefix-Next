@@ -1,3 +1,4 @@
+"use client";
 import { useTranslations } from "next-intl";
 import InputField from "../form-elements/InputField";
 import PhoneInput from "../form-elements/PhoneInput";
@@ -6,6 +7,8 @@ import PasswordField from "../form-elements/PasswordField";
 import SubmitButton from "../form-elements/SubmitButton";
 import { Link } from "@/i18n/routing";
 import useGetCities from "@/app/_hooks/user/useGetCities";
+import { useActionState } from "react";
+import { userRegisterAction } from "@/app/_lib/actions";
 
 function UserRegister({
   setFormType,
@@ -19,6 +22,12 @@ function UserRegister({
 }) {
   const t = useTranslations();
   const { data: cities, isLoading } = useGetCities();
+
+  const [state, formAction, isPending] = useActionState(
+    userRegisterAction,
+    null
+  );
+
   const onSubmit = async () => {
     console.log("aaaaa");
     setFormType("confirm-register");
@@ -29,7 +38,13 @@ function UserRegister({
       <div className="mb-2">
         <p className="sub-head">{t("auth.registerSubtitle")}</p>
       </div>
-      <form className="form" onSubmit={handleSubmit(onSubmit)}>
+      <form
+        className="form"
+        action={(formData) => {
+          formData.append("coundy_code", "+962");
+          formAction(formData);
+        }}
+      >
         <InputField
           label={t("auth.fullName")}
           placeholder={t("auth.fullName")}
@@ -97,7 +112,7 @@ function UserRegister({
           >
             <i className="fal fa-arrow-right"></i>
           </div>
-          <SubmitButton name={t("auth.send")} loading={isSubmitting} />
+          <SubmitButton name={t("auth.send")} loading={isPending} />
         </div>
       </form>
     </>

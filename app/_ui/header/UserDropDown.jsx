@@ -1,17 +1,16 @@
 "use client";
-
-import React, { useState } from "react";
-import { useTranslations } from "next-intl";
-import Link from "next/link";
-import { Dropdown } from "react-bootstrap";
-import Image from "next/image";
-import { useDispatch, useSelector } from "react-redux";
-import { setShowAuthModal } from "@/app/_redux/slices/showAuthModal";
-import ConfirmDeleteAccount from "../modals/ConfirmDeleteAccount";
-import { logout } from "@/app/_lib/actions";
+import { logoutAction } from "@/app/_lib/actions";
 import { setloginState } from "@/app/_redux/slices/loginStatus";
+import { setShowAuthModal } from "@/app/_redux/slices/showAuthModal";
 import { useRouter } from "@/i18n/routing";
+import { useTranslations } from "next-intl";
+import Image from "next/image";
+import Link from "next/link";
+import { useState } from "react";
+import { Dropdown } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
 import { toast } from "sonner";
+import ConfirmDeleteAccount from "../modals/ConfirmDeleteAccount";
 
 export default function UserDropDown() {
   const [show, setShow] = useState(false);
@@ -27,7 +26,7 @@ export default function UserDropDown() {
   };
   const performLogout = async () => {
     try {
-      const res = await logout();
+      const res = await logoutAction();
       if (res?.code === 200) {
         dispatch(setloginState({ user: null }));
         router.push("/");

@@ -6,7 +6,7 @@ import { getTranslations } from "next-intl/server";
 import { cookies } from "next/headers";
 
 // auth actions
-export async function logout() {
+export async function logoutAction() {
   const cookieStore = await cookies();
   const token = cookieStore.get("token")?.value;
   console.log(token);
@@ -14,14 +14,12 @@ export async function logout() {
     console.log("there is no token");
     return;
   }
-
   try {
     const res = await axiosInstance.post("auth/logout", null, {
       headers: {
         Authorization: token,
       },
     });
-
     if (res.data.code === 200) {
       cookieStore.delete("token");
       cookieStore.delete("id");
@@ -32,9 +30,26 @@ export async function logout() {
   }
 }
 
+export async function userRegisterAction(prevState, queryData) {
+  const t = await getTranslations("common");
+  const name = queryData.get("name");
+  const email = queryData.get("email");
+  const phone = queryData.get("phone");
+  const password = queryData.get("password");
+  const reqBody = {
+    phone,
+    type: "register",
+  };
+  const res = await axiosInstance.post("/auth/send-code", {
+    phone: phone,
+
+    type: "register",
+  });
+}
+
 // contact us
 export async function sendMessageAction(prevState, queryData) {
-  const t = await getTranslations("common");
+  const t = await getTranslations();
   const name = queryData.get("name");
   const email = queryData.get("email");
   const phone = queryData.get("phone");
