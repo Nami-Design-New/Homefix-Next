@@ -9,28 +9,35 @@ import { Link } from "@/i18n/routing";
 import useGetCities from "@/app/_hooks/user/useGetCities";
 import { useActionState } from "react";
 import { userRegisterAction } from "@/app/_lib/actions";
+import { toast } from "sonner";
 
 function UserRegister({
   setFormType,
   setShow,
   register,
   errors,
-  watch,
   handleSubmit,
+  watch,
   isSubmitting,
   reset,
 }) {
   const t = useTranslations();
   const { data: cities, isLoading } = useGetCities();
 
-  const [state, formAction, isPending] = useActionState(
-    userRegisterAction,
-    null
-  );
+  const handleSendCode = async (formData) => {
+    console.log(formData);
 
-  const onSubmit = async () => {
-    console.log("aaaaa");
-    setFormType("confirm-register");
+    try {
+      const res = await userRegisterAction(formData);
+      if (res.code === 200) {
+        setFormType("confirm-register"); // Move to confirmation step
+        toast.success(res.message);
+      } else {
+        toast.error(res.message);
+      }
+    } catch (e) {
+      console.error("Error Sending OTP:", e);
+    }
   };
 
   return (
@@ -38,13 +45,7 @@ function UserRegister({
       <div className="mb-2">
         <p className="sub-head">{t("auth.registerSubtitle")}</p>
       </div>
-      <form
-        className="form"
-        action={(formData) => {
-          formData.append("coundy_code", "+962");
-          formAction(formData);
-        }}
-      >
+      <form className="form" onSubmit={handleSubmit(handleSendCode)}>
         <InputField
           label={t("auth.fullName")}
           placeholder={t("auth.fullName")}
@@ -112,7 +113,7 @@ function UserRegister({
           >
             <i className="fal fa-arrow-right"></i>
           </div>
-          <SubmitButton name={t("auth.send")} loading={isPending} />
+          <SubmitButton name={t("auth.send")} loading={isSubmitting} />
         </div>
       </form>
     </>

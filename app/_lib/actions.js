@@ -30,21 +30,16 @@ export async function logoutAction() {
   }
 }
 
-export async function userRegisterAction(prevState, queryData) {
-  const t = await getTranslations("common");
-  const name = queryData.get("name");
-  const email = queryData.get("email");
-  const phone = queryData.get("phone");
-  const password = queryData.get("password");
+export async function userRegisterAction(formData) {
+  const t = await getTranslations();
+  const { phone, country_code } = formData;
   const reqBody = {
     phone,
+    country_code,
     type: "register",
   };
-  const res = await axiosInstance.post("/auth/send-code", {
-    phone: phone,
-
-    type: "register",
-  });
+  const res = await axiosInstance.post("/auth/send-code", reqBody);
+  return res.data;
 }
 
 // contact us
