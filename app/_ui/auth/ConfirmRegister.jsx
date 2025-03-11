@@ -1,5 +1,5 @@
 import clientAxios from "@/app/_lib/clientAxios";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useTransition } from "react";
 import { useDispatch } from "react-redux";
 import OtpContainer from "../form-elements/OtpContainer";
 import SubmitButton from "../form-elements/SubmitButton";
@@ -8,6 +8,13 @@ import { toast } from "sonner";
 import { setloginState } from "@/app/_redux/slices/loginStatus";
 import { setShowAuthModal } from "@/app/_redux/slices/showAuthModal";
 import { useRouter } from "next/navigation";
+import {
+  loginUserAction,
+  registerUser,
+  registerUserAction,
+  verifyOtp,
+  verifyOtpAction,
+} from "@/app/_lib/actions";
 
 export default function ConfirmRegister({
   data,
@@ -18,8 +25,9 @@ export default function ConfirmRegister({
   const t = useTranslations();
   const dispatch = useDispatch();
   const [code, setCode] = useState("");
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
   const [timer, setTimer] = useState(60);
+  const [loading, startTransition] = useTransition();
   const [resendDisabled, setResendDisabled] = useState(true);
   const router = useRouter();
 
@@ -34,89 +42,77 @@ export default function ConfirmRegister({
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("logein");
+    startTransition(async () => {
+      const verifyResult = await verifyOtpAction(
+        watch("phone"),
+        watch("country_code"),
+        code
+      );
 
-    setLoading(true);
-
-    try {
-      const checkResponse = await clientAxios.post("/auth/confirm-code", {
-        phone: watch("phone"),
-        country_code: watch("country_code"),
-        type: "register",
-        code: code,
-      });
-
-      if (checkResponse.data.code === 200) {
-        const registerResponse = await clientAxios.post("/auth/users", data, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        });
-
-        if (registerResponse.data.code === 200) {
-          const loginPayload = {
-            phone: watch("phone"),
-            password: watch("password"),
-            type: data?.type,
-            country_code: watch("country_code"),
-          };
-          try {
-            const res = await fetch("/api/login", {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-                Accept: "application/json",
-              },
-              body: JSON.stringify(loginPayload),
-            });
-            const data = await res.json();
-
-            if (data.code === 200) {
-              toast.success(data.message);
-              dispatch(
-                setloginState({ token: data.data.token, user: data.data })
-              );
-              dispatch(setShowAuthModal(false));
-              router.push("/");
-              localStorage.setItem("userType", userType);
-            } else {
-              toast.error(data.message);
-            }
-          } catch (error) {
-            console.error(error);
-          }
-        } else {
-          toast.error(registerResponse.data.message);
-        }
-      } else {
-        toast.error(checkResponse.data.message);
+      if (!verifyResult.success) {
+        toast.error(verifyResult.message);
+        return;
       }
-    } catch (error) {
-      console.log(error);
-      toast.error("Some thing went wrong, please try again or contact us.");
-    } finally {
-      setLoading(false);
-    }
+      console.log(data);
+
+      const registerResult = await registerUserAction(data);
+      if (!registerResult.success) {
+        toast.error(registerResult.message);
+        return;
+      }
+      const loginPayload = {
+        phone: watch("phone"),
+        password: watch("password"),
+        type: data?.type,
+        country_code: watch("country_code"),
+      };
+      try {
+        const res = await fetch("/api/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify(loginPayload),
+        });
+        const data = await res.json();
+
+        if (data.code === 200) {
+          toast.success(data.message);
+          dispatch(setloginState({ token: data.data.token, user: data.data }));
+          dispatch(setShowAuthModal(false));
+          router.push("/");
+          localStorage.setItem("userType", userType);
+        } else {
+          toast.error(data.message);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    });
   };
 
   const handleResend = async () => {
-    try {
-      const res = await clientAxios.post("/auth/send-code", {
-        phone: watch("phone"),
-        country_code: watch("country_code"),
-        type: "register",
-      });
-      if (res.data.code === 200) {
-        toast.success(res.data.message);
-        setTimer(60);
-        setResendDisabled(true);
-      } else {
-        toast.error(res.data.message);
+    startTransition(async () => {
+      try {
+        const res = await clientAxios.post("/auth/send-code", {
+          phone: watch("phone"),
+          country_code: watch("country_code"),
+          type: "register",
+        });
+
+        if (res.data.code === 200) {
+          toast.success(res.data.message);
+          setTimer(60);
+          setResendDisabled(true);
+        } else {
+          toast.error(res.data.message);
+        }
+      } catch (error) {
+        console.error(error);
+        toast.error("Something went wrong, please try again.");
       }
-    } catch (error) {
-      console.log(error);
-      toast.error("Some thing went wrong, please try again or contact us.");
-    }
+    });
   };
 
   return (

@@ -1,15 +1,14 @@
 "use client";
+import useGetCities from "@/app/_hooks/user/useGetCities";
+import { sendCodeAction } from "@/app/_lib/actions";
+import { Link } from "@/i18n/routing";
 import { useTranslations } from "next-intl";
+import { toast } from "sonner";
 import InputField from "../form-elements/InputField";
+import PasswordField from "../form-elements/PasswordField";
 import PhoneInput from "../form-elements/PhoneInput";
 import SelectField from "../form-elements/SelectedField";
-import PasswordField from "../form-elements/PasswordField";
 import SubmitButton from "../form-elements/SubmitButton";
-import { Link } from "@/i18n/routing";
-import useGetCities from "@/app/_hooks/user/useGetCities";
-import { useActionState } from "react";
-import { userRegisterAction } from "@/app/_lib/actions";
-import { toast } from "sonner";
 
 function UserRegister({
   setFormType,
@@ -25,12 +24,10 @@ function UserRegister({
   const { data: cities, isLoading } = useGetCities();
 
   const handleSendCode = async (formData) => {
-    console.log(formData);
-
     try {
-      const res = await userRegisterAction(formData);
+      const res = await sendCodeAction(formData, "register");
       if (res.code === 200) {
-        setFormType("confirm-register"); // Move to confirmation step
+        setFormType("confirm-register");
         toast.success(res.message);
       } else {
         toast.error(res.message);

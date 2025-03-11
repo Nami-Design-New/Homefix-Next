@@ -671,7 +671,8 @@ header nav .actions .rounded_btn:active {
 header nav .actions .rounded_btn.show {
   background: var(--btn-bg);
 }
-header nav .actions .rounded_btn .fa-globe {
+header nav .actions .rounded_btn .fa-globe,
+header nav .actions .rounded_btn .fa-user {
   color: var(--second);
 }
 header nav .actions .rounded_btn .user_img {

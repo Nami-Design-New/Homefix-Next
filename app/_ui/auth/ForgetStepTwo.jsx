@@ -1,9 +1,11 @@
+"use client";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 
 import { toast } from "sonner";
 import OtpContainer from "../form-elements/OtpContainer";
 import SubmitButton from "../form-elements/SubmitButton";
+import clientAxios from "@/app/_lib/clientAxios";
 
 export default function ForgetStepTwo({ setStep, watch }) {
   const t = useTranslations();
@@ -26,7 +28,7 @@ export default function ForgetStepTwo({ setStep, watch }) {
     e.preventDefault();
     setLoading(true);
     try {
-      const res = await axiosInstance.post("/auth/confirm-code", {
+      const res = await clientAxios.post("/auth/confirm-code", {
         phone: watch("phone"),
         country_code: watch("country_code"),
         type: "reset",

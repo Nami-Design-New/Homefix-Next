@@ -1,4 +1,4 @@
-import clientAxios from "@/app/_lib/clientAxios";
+import { sendCodeAction } from "@/app/_lib/actions";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import PhoneInput from "../form-elements/PhoneInput";
@@ -15,21 +15,17 @@ export default function ForgetStepOne({
 }) {
   const t = useTranslations();
 
-  const onSubmit = async () => {
+  const onSubmit = async (formData) => {
     try {
-      const res = await clientAxios.post("/auth/send-code", {
-        phone: watch("phone"),
-        country_code: watch("country_code"),
-        type: watch("type"),
-      });
-      if (res.data.code === 200) {
-        toast.success(res.data.message);
+      const res = await sendCodeAction(formData, "reset");
+      if (res.code === 200) {
+        toast.success(res.message);
         setStep(2);
       } else {
-        toast.error(res.data.message);
+        toast.error(res.message);
       }
-    } catch (error) {
-      console.log(error);
+    } catch (e) {
+      console.log(e);
       toast.error("Some thing went wrong, please try again or contact us.");
     }
   };

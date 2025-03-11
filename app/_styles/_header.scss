@@ -64,7 +64,9 @@ header {
         &.show {
           background: var(--btn-bg);
         }
-        .fa-globe {
+
+        .fa-globe,
+        .fa-user {
           color: var(--second);
         }
         .user_img {
