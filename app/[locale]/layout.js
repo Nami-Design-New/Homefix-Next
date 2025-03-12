@@ -12,6 +12,7 @@ import "@/app/_styles/all.min.css";
 import "@/app/_styles/style.css";
 import "swiper/css";
 import AuthProvider from "../_providers/AuthProvider";
+import AuthCheck from "../_providers/AuthCheck";
 
 export async function generateMetadata({ params }) {
   const { locale } = (await params) || { locale: "en" };
@@ -68,7 +69,6 @@ export async function generateMetadata({ params }) {
 
 export default async function RootLayout({ children, params }) {
   const { locale } = (await params) || { locale: "en" };
-
   const messages = await getMessages();
 
   return (
@@ -85,9 +85,10 @@ export default async function RootLayout({ children, params }) {
             <ReactQueryProvider>
               <AuthProvider>
                 <Header />
-                <main>{children}</main>
+                <main>
+                  {children} <AuthCheck />
+                </main>
                 <Footer />
-                <AuthModal />
               </AuthProvider>
             </ReactQueryProvider>
           </ReduxProvider>

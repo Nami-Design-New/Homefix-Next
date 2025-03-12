@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^4.1.3",
+    "@react-google-maps/api": "^2.20.6",
     "@reduxjs/toolkit": "^2.6.0",
     "@tanstack/react-query": "^5.67.1",
     "axios": "^1.8.1",
@@ -23,6 +24,7 @@
     "react-redux": "^9.2.0",
     "sonner": "^2.0.1",
     "swiper": "^11.2.4",
+    "wavesurfer.js": "^7.9.1",
     "yup": "^1.6.1"
   },
   "devDependencies": {

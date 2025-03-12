@@ -17,7 +17,15 @@ const InputField = forwardRef(
         )}
 
         <div className="input-wrapper">
-          {icon && <Image fill src={icon} alt="input icon" className="input-icon" />}
+          {icon && (
+            <Image
+              width={20}
+              height={20}
+              src={icon}
+              alt="input icon"
+              className="input-icon"
+            />
+          )}
           <Form.Control
             as={as}
             type={type}

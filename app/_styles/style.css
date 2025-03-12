@@ -2659,8 +2659,8 @@ body .service-details .service_details_card .img {
   background: var(--white);
   border-radius: 24px;
   padding: 12px;
-}
-body .service-details .service_details_card .img img {
+  position: relative;
+  aspect-ratio: 3/2;
   height: 84px;
 }
 body .service-details .service_details_card h2 {
@@ -2680,7 +2680,9 @@ body .service-details .service_details_card ul li {
 body .service-details .service_details_card ul li h6 {
   margin: 0;
 }
-body .service-details .service_details_card ul li img {
+body .service-details .service_details_card ul li .img-wrapper {
+  position: relative;
+  aspect-ratio: 1/1;
   height: 22px;
 }
 body .service-details h2 {
@@ -2697,6 +2699,7 @@ body .service-details .section {
   display: flex;
   flex-direction: column;
   gap: 10px;
+  margin-bottom: 1rem;
 }
 body .service-details .section .label-container {
   display: flex;
