@@ -1,3 +1,6 @@
+"use client";
+
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import { Form } from "react-bootstrap";
 
@@ -26,7 +29,7 @@ const ImageUploadBox = ({
     <div className="image-container">
       <label className="upload-box" htmlFor={props.id}>
         {preview ? (
-          <img src={preview} alt="Uploaded" className="uploaded-image" />
+          <Image src={preview} alt="Uploaded" fill className="uploaded-image" />
         ) : (
           <div className="upload-content">
             <i className="fa-solid fa-image"></i>

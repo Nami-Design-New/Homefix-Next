@@ -48,13 +48,10 @@ export default function ConfirmRegister({
         watch("country_code"),
         code
       );
-
       if (!verifyResult.success) {
         toast.error(verifyResult.message);
         return;
       }
-      console.log(data);
-
       const registerResult = await registerUserAction(data);
       if (!registerResult.success) {
         toast.error(registerResult.message);
@@ -81,6 +78,7 @@ export default function ConfirmRegister({
           toast.success(data.message);
           dispatch(setloginState({ token: data.data.token, user: data.data }));
           dispatch(setShowAuthModal(false));
+          setFormType("login");
           router.push("/");
           localStorage.setItem("userType", userType);
         } else {

@@ -19,6 +19,9 @@
     .dropdown {
       .button {
         background-color: var(--white) !important;
+        .img {
+          position: relative;
+        }
       }
     }
     .file_upload label {

@@ -1,6 +1,7 @@
+"use client";
+import Image from "next/image";
 import { forwardRef } from "react";
 import { Form } from "react-bootstrap";
-
 const PhoneInput = forwardRef(
   ({ label, error, countryCode, ...props }, ref) => {
     return (
@@ -21,7 +22,12 @@ const PhoneInput = forwardRef(
             {countryCode && (
               <div className="button">
                 <div className="img">
-                  <img src="/images/Flag_of_Jordan.svg" alt="Jordan Flag" />
+                  <Image
+                    src="/images/Flag_of_Jordan.svg"
+                    width={28}
+                    height={20}
+                    alt="Jordan Flag"
+                  />
                 </div>
                 <span>{countryCode}</span>
               </div>

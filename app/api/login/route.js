@@ -4,23 +4,16 @@ import { NextResponse } from "next/server";
 
 export async function POST(request) {
   try {
-    console.log("Received login request");
     const payload = await request.json();
-
     const res = await axiosInstance.post("auth/login", payload);
     const data = res.data;
-
     if (data.code !== 200) {
-      console.error("Error response from backend:" + data.message);
       return NextResponse.json(data);
     }
-
     const cookieStore = await cookies();
     const token = data?.data?.token;
     const userId = data?.data?.id;
-
     if (token) {
-      console.log("Setting cookies...");
       cookieStore.set("token", token, {
         path: "/",
         httpOnly: true,

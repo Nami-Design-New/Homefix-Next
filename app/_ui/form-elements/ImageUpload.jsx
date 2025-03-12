@@ -1,3 +1,5 @@
+"use client";
+import Image from "next/image";
 import { useRef, useEffect, useState } from "react";
 import { Form } from "react-bootstrap";
 
@@ -22,7 +24,7 @@ const ImageUpload = ({ register, error, watch }) => {
   return (
     <div className="image-upload-wrapper">
       <label htmlFor="image" className="image-container">
-        <img ref={imgView} src={preview} alt="avatar" />
+        <Image ref={imgView} src={preview} fill alt="avatar" />
         <div className="upload-button">
           <i className="fa-solid fa-camera"></i>
         </div>

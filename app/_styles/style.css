@@ -859,6 +859,9 @@ footer .copy_rights .social_media a:hover {
 .form.reverse-form .dropdown .button {
   background-color: var(--white) !important;
 }
+.form.reverse-form .dropdown .button .img {
+  position: relative;
+}
 .form.reverse-form .file_upload label {
   background-color: var(--white) !important;
 }

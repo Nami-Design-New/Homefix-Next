@@ -25,9 +25,10 @@ function UserRegister({
 
   const handleSendCode = async (formData) => {
     try {
-      const res = await sendCodeAction(formData, "register");
+      const res = await sendCodeAction(formData);
       if (res.code === 200) {
         setFormType("confirm-register");
+        console.log(res.data);
         toast.success(res.message);
       } else {
         toast.error(res.message);

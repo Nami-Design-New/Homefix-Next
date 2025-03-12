@@ -1,3 +1,4 @@
+"use client";
 import useGetCities from "@/app/_hooks/user/useGetCities";
 import { useTranslations } from "next-intl";
 import InputField from "../form-elements/InputField";
@@ -18,6 +19,7 @@ export default function TechnicalStepOne({
   const t = useTranslations();
   const { data: cities } = useGetCities();
   const { data: categories } = useGetCategory();
+  console.log(errors);
 
   return (
     <>

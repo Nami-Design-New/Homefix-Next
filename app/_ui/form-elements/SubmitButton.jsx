@@ -1,4 +1,4 @@
-import { useFormStatus } from "react-dom";
+"use  client";
 
 export default function SubmitButton({
   loading,

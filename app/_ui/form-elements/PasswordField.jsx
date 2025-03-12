@@ -1,3 +1,4 @@
+"use client";
 import { useState, forwardRef } from "react";
 import { Form } from "react-bootstrap";
 

@@ -1,4 +1,6 @@
+"use  client";
 import { useTranslations } from "next-intl";
+import Image from "next/image";
 import { forwardRef } from "react";
 import { Form } from "react-bootstrap";
 
@@ -15,7 +17,7 @@ const SelectField = forwardRef(
           {label} {hint && <span className="hint">{hint}</span>}
         </label>
         <div className="input-wrapper">
-          {icon && <img src={icon} alt="input icon" className="input-icon" />}
+          {icon && <Image fill src={icon} alt="input icon" className="input-icon" />}
           <Form.Select ref={ref} {...props} disabled={loading}>
             <option value="" disabled>
               {loading ? loadingText : t("select")}

@@ -34,7 +34,7 @@ export async function logoutAction() {
 
 //send Code Action
 
-export async function sendCodeAction(formData, type) {
+export async function sendCodeAction(formData, type = "register") {
   const t = await getTranslations();
   const { phone, country_code } = formData;
   const reqBody = {
@@ -43,26 +43,31 @@ export async function sendCodeAction(formData, type) {
     type,
   };
   const res = await axiosInstance.post("/auth/send-code", reqBody);
-  console.log(res);
-
   return res.data;
 }
 
 // Confirm Code Action
 
-export async function verifyOtpAction(phone, country_code, code) {
+export async function verifyOtpAction(
+  phone,
+  country_code,
+  code,
+  type = "register"
+) {
   try {
+    console.log("sending confirm code....");
     const response = await axiosInstance.post("/auth/confirm-code", {
       phone,
       country_code,
-      type: "register",
+      type,
       code,
     });
 
     if (response.data.code === 200) {
-      console.log(response);
+      console.log("verifyOtpAction response success : ", response.data);
       return { success: true };
     } else {
+      console.log("verifyOtpAction response error : ", response);
       return { success: false, message: response.data.message };
     }
   } catch (error) {
@@ -78,13 +83,31 @@ export async function verifyOtpAction(phone, country_code, code) {
 
 export async function registerUserAction(userData) {
   try {
-    const response = await axiosInstance.post("/auth/users", userData, {
-      headers: { "Content-Type": "multipart/form-data" },
+    console.log("Converting userData to FormData...");
+
+    const formData = new FormData();
+    for (const key in userData) {
+      if (userData[key] instanceof File) {
+        formData.append(key, userData[key], userData[key].name);
+      } else {
+        formData.append(key, userData[key]);
+      }
+    }
+
+    console.log("sending user data to auth users ..........");
+    console.log("userData", formData);
+
+    const response = await axiosInstance.post("/auth/users", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
     });
 
     if (response.data.code === 200) {
+      console.log("response user register data success", response.data);
       return { success: true, message: response.data.message };
     } else {
+      console.log("response user register data error", response.data);
       return { success: false, message: response.data.message };
     }
   } catch (error) {
