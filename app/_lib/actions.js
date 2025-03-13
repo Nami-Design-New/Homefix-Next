@@ -120,8 +120,6 @@ export async function registerUserAction(userData) {
 }
 
 // Notifications Actions
-
-// delete action
 export async function deleteNotificationAction(id) {
   try {
     const cookiesStore = cookies();
@@ -132,6 +130,43 @@ export async function deleteNotificationAction(id) {
   } catch (error) {
     console.error("Error deleting notification:", error);
     return { success: false, message: "An error occurred while deleting." };
+  }
+}
+
+// service order actions
+
+export async function orderServiceAction(payload) {
+  const formData = new FormData();
+  for (const key in payload) {
+    if (Array.isArray(payload[key])) {
+      payload[key].forEach((file, index) => {
+        if (file instanceof File) {
+          formData.append(`${key}[]`, file, file.name);
+        } else {
+          formData.append(`${key}[${index}]`, file);
+        }
+      });
+    } else if (payload[key] instanceof File) {
+      formData.append(key, payload[key], payload[key].name);
+    } else {
+      formData.append(key, payload[key]);
+    }
+  }
+  console.log("formData :", formData);
+
+  try {
+    const res = await axiosInstance.post("/homefix/orders-client", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    return res.data;
+  } catch (e) {
+    console.error("Error while ordering service:", e);
+    return {
+      success: false,
+      message: "An error occurred while ordering service.",
+    };
   }
 }
 

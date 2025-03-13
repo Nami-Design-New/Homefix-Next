@@ -2,16 +2,20 @@
 
 import { useState } from "react";
 import { toast } from "sonner";
-import { useRouter } from "next/navigation";
+
 import SubmitButton from "../form-elements/SubmitButton";
 import AudioRecorder from "../form-elements/Record";
 import { useTranslations } from "next-intl";
 import MapSection from "../MapSection";
+import ConfirmationModal from "../modals/ConfirmationModal";
+import { orderServiceAction } from "@/app/_lib/actions";
+import { useRouter } from "@/i18n/routing";
 
 export default function ServiceForm({ serviceId }) {
   const t = useTranslations();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const [isAgreed, setIsAgreed] = useState();
   const [showModal, setShowModal] = useState(false);
   const [formData, setFormData] = useState({
     service_id: serviceId,
@@ -44,16 +48,39 @@ export default function ServiceForm({ serviceId }) {
     setShowModal(true);
   };
 
-  const handleConfirm = async () => {
+  const handleConfirm = async (e) => {
+    e.preventDefault();
     setLoading(true);
-    const result = await uploadOrder(formData);
-    setLoading(false);
 
-    if (result.success) {
-      toast.success(result.message);
-      router.push("/my-orders");
-    } else {
-      toast.error(result.message);
+    const payload = {
+      service_id: formData.service_id,
+      address: formData.address,
+      latitude: formData.latitude,
+      longitude: formData.longitude,
+      description: formData.description,
+      images_list: formData.images_list,
+      voice: formData.voice,
+      is_schedule: formData.is_schedule,
+    };
+
+    if (formData.is_schedule === 1) {
+      payload.schedule_date = formData.schedule_date;
+      payload.schedule_time = formData.schedule_time;
+    }
+
+    try {
+      const data = await orderServiceAction(formData);
+
+      if (data?.code) {
+        toast.success(data.message);
+        router.push("/my-orders");
+      } else {
+        toast.error(data.message);
+      }
+    } catch (e) {
+      toast.error(data.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -169,12 +196,14 @@ export default function ServiceForm({ serviceId }) {
         <SubmitButton className="confirm-btn" name={t("Services.confirm")} />
       </div>
 
-      {/* <ConfirmationModal
+      <ConfirmationModal
         open={showModal}
         onClose={() => setShowModal(false)}
+        isAgreed={isAgreed}
         loading={loading}
+        setIsAgreed={setIsAgreed}
         handleConfirm={handleConfirm}
-      /> */}
+      />
     </form>
   );
 }

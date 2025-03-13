@@ -1,7 +1,9 @@
+import { getTranslations } from "next-intl/server";
 import Image from "next/image";
 import React from "react";
 
 export default async function ServiceDetailsCard({ service }) {
+  const t = await getTranslations();
   return (
     <div className="col-lg-10  mb-3">
       <div className="service_details_card">
@@ -21,7 +23,9 @@ export default async function ServiceDetailsCard({ service }) {
               <div className="img-wrapper">
                 <Image src="/images/technical.svg" fill alt="technical" />
               </div>
-              <h6>Available Technicians: {service.technicals_count}</h6>
+              <h6>
+                {t("availableTechnicans")} {service.technicals_count}
+              </h6>
             </li>
           </ul>
         </div>
