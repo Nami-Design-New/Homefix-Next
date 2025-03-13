@@ -13,7 +13,9 @@ axiosInstance.interceptors.request.use(
   async (config) => {
     const cookiesStore = await cookies();
     const lang = cookiesStore.get("NEXT_LOCALE")?.value || "ar";
+    const token = cookiesStore.get("token")?.value || "";
     config.headers["Accept-Language"] = lang;
+    config.headers["Authorization"] = `${token}`;
     return config;
   },
   (error) => {

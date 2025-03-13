@@ -119,6 +119,22 @@ export async function registerUserAction(userData) {
   }
 }
 
+// Notifications Actions
+
+// delete action
+export async function deleteNotificationAction(id) {
+  try {
+    const cookiesStore = cookies();
+    const token = cookiesStore.get("authToken")?.value;
+    const res = await axiosInstance.delete(`/homefix/notification/${id}`);
+    revalidatePath("/notifications");
+    return res?.data;
+  } catch (error) {
+    console.error("Error deleting notification:", error);
+    return { success: false, message: "An error occurred while deleting." };
+  }
+}
+
 // contact us
 export async function sendMessageAction(prevState, queryData) {
   const t = await getTranslations();

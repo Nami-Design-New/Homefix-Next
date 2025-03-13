@@ -58,20 +58,7 @@ body {
       left: initial;
       right: 16px;
     }
-    .contact_page .contact-form .input-field .input-wrapper {
-      input.form-control,
-      textarea.form-control {
-        direction: ltr;
-      }
-      input.form-control[type="email"] {
-        padding-inline-end: unset;
-        padding-inline-start: 40px;
-      }
-      .input-icon {
-        left: 16px;
-        right: unset;
-      }
-    }
+
     .profile-container .profile-form .input-field .input-wrapper {
       input.form-control,
       select.form-select {

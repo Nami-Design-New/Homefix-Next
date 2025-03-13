@@ -1,32 +1,36 @@
+import { NextRequest, NextResponse } from "next/server";
 import createMiddleware from "next-intl/middleware";
-import { NextResponse } from "next/server";
 import { routing } from "./i18n/routing";
 
 const intlMiddleware = createMiddleware(routing);
 
 export function middleware(req) {
   const res = intlMiddleware(req);
-  const token = req.cookies.get("token")?.value;
+
+  const token = req.cookies.get("token");
+  const { pathname, searchParams } = req.nextUrl;
+  const locale = pathname.split("/")[1];
+  console.log("locale :", locale);
 
   const protectedRoutes = [
-    "/order-service",
     "/notifications",
     "/edit-profile",
     "/my-orders",
-    "/aboutus",
-  ];
+    "/settings",
+    "/order-service",
+  ].map((route) => `/${locale}${route}`);
 
-  const pathname = req.nextUrl.pathname;
-  console.log("The pathname:", pathname);
+  const normalizedPathname = pathname.replace(/\/$/, "");
 
-  const normalizedPathname = pathname.replace(/^\/(ar|en)(\/|$)/, "/");
-  console.log("Normalized pathname:", normalizedPathname);
+  if (protectedRoutes.some((route) => normalizedPathname.startsWith(route))) {
+    if (!token) {
+      const homeUrl = new URL(`/${locale}/`, req.url);
+      console.log("homeUrl :", homeUrl);
 
-  if (protectedRoutes.includes(normalizedPathname) && !token) {
-    res.headers.set("x-authenticated", "false");
-    return NextResponse.redirect(new URL("/", req.url));
-  } else {
-    res.headers.set("x-authenticated", "true");
+      homeUrl.searchParams.set("authModal", "true");
+
+      return NextResponse.redirect(homeUrl);
+    }
   }
 
   return res;

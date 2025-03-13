@@ -6,7 +6,12 @@ export default async function ServiceDetailsCard({ service }) {
     <div className="col-lg-10  mb-3">
       <div className="service_details_card">
         <div className="img">
-          <Image src={service.image} fill alt={service.title} />
+          <Image
+            src={service.image}
+            width={120}
+            height={84}
+            alt={service.title}
+          />
         </div>
         <div className="content">
           <h2>{service.title}</h2>

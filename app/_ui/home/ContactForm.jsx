@@ -27,7 +27,6 @@ export default function ContactForm() {
   const fields = [
     { name: "name", label: t("name"), type: "text", icon: "user" },
     { name: "email", label: t("email"), type: "email", icon: "email" },
-    { name: "phone", label: t("phone"), type: "text", icon: "phone" },
     {
       name: "subject",
       label: t("subject"),

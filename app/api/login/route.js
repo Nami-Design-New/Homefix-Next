@@ -20,7 +20,6 @@ export async function POST(request) {
         sameSite: "lax",
         secure: process.env.NODE_ENV === "production",
       });
-
       cookieStore.set("id", String(userId), {
         path: "/",
         httpOnly: true,

@@ -86,7 +86,8 @@ export default async function RootLayout({ children, params }) {
               <AuthProvider>
                 <Header />
                 <main>
-                  {children} <AuthCheck />
+                  {children}
+                  <AuthCheck />
                 </main>
                 <Footer />
               </AuthProvider>

@@ -2,10 +2,10 @@
 import { logoutAction } from "@/app/_lib/actions";
 import { setloginState } from "@/app/_redux/slices/loginStatus";
 import { setShowAuthModal } from "@/app/_redux/slices/showAuthModal";
-import { useRouter } from "@/i18n/routing";
+import { Link, useRouter } from "@/i18n/routing";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
-import Link from "next/link";
+
 import { useState } from "react";
 import { Dropdown } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
@@ -60,11 +60,9 @@ export default function UserDropDown() {
           <Dropdown.Item as={Link} href="/edit-profile">
             {t("editProfile")}
           </Dropdown.Item>
-
-          <Dropdown.Item as={Link} href="/notifications">
-            {t("notifications")}
+          <Dropdown.Item as={Link} href="/my-orders">
+            {t("myOrders")}
           </Dropdown.Item>
-
           <Dropdown.Item onClick={() => performLogout()}>
             {t("logout")}
           </Dropdown.Item>

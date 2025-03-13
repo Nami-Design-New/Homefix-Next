@@ -13,12 +13,14 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import RegisterTechnical from "../auth/RegisterTechnical";
 import ConfirmRegister from "../auth/ConfirmRegister";
 import ForgetPassword from "../auth/ForgetPassword";
+import { useDeleteSearchParams } from "@/app/_utils/helper";
 
 export default function AuthModal() {
   const { show } = useSelector((state) => state.showAuthModal);
   const dispatch = useDispatch();
   const router = useRouter();
   const t = useTranslations();
+  const { closeAuthModal } = useDeleteSearchParams();
 
   const [formType, setFormType] = useState("login");
   const [userType, setUserType] = useState("client");
@@ -108,7 +110,8 @@ export default function AuthModal() {
           className="closeModal"
           onClick={() => {
             dispatch(setShowAuthModal(false));
-            router.push("/");
+            closeAuthModal();
+            // router.push("/");
             setFormType("login");
             setUserType("client");
           }}
