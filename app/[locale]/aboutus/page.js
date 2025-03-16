@@ -3,7 +3,14 @@ import { getTranslations } from "next-intl/server";
 import React from "react";
 import { Col, Container, Row } from "react-bootstrap";
 
-export default async function Page() {
+export function generateStaticParams() {
+  return [{ locale: "en" }, { locale: "ar" }];
+}
+
+export default async function Page({ params }) {
+  const myparams = await params;
+  console.log(myparams);
+
   const t = await getTranslations("aboutUs");
   return (
     <>

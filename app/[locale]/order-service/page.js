@@ -3,7 +3,8 @@ import ServiceDetailsCard from "@/app/_ui/order-service-components/ServiceDetail
 import getServices from "@/app/_utils/apiServices/services";
 import { redirect } from "@/i18n/routing";
 
-export default async function page({ searchParams }) {
+export default async function page({ searchParams, params }) {
+  const { locale } = await params;
   const id = (await searchParams?.id) ? parseInt(searchParams.id) : null;
   if (!id) redirect("/");
 

@@ -1,5 +1,5 @@
 import { NextIntlClientProvider } from "next-intl";
-import { getMessages } from "next-intl/server";
+import { getMessages, setRequestLocale } from "next-intl/server";
 import { Toaster } from "sonner";
 import { ReactQueryProvider } from "../_providers/ReactQueryProvider";
 import ReduxProvider from "../_redux/Provider";
@@ -68,7 +68,7 @@ export async function generateMetadata({ params }) {
 }
 
 export default async function RootLayout({ children, params }) {
-  const { locale } = (await params) || { locale: "en" };
+  const { locale } = await params;
   const messages = await getMessages();
 
   return (
