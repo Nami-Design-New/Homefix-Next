@@ -13,7 +13,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import RegisterTechnical from "../auth/RegisterTechnical";
 import ConfirmRegister from "../auth/ConfirmRegister";
 import ForgetPassword from "../auth/ForgetPassword";
-import { useDeleteSearchParams } from "@/app/_utils/helper";
+import { useDeleteSearchParams } from "@/app/_hooks/useDeleteSearchParams";
+
 
 export default function AuthModal() {
   const { show } = useSelector((state) => state.showAuthModal);

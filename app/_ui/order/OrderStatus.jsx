@@ -1,8 +1,8 @@
-import { getStatusText, getStatusValue } from "../../utils/helper";
-import { useTranslation } from "react-i18next";
+import { getStatusText, getStatusValue } from "@/app/_utils/helper";
+import { getTranslations } from "next-intl/server";
 
-export default function OrderStatus({ orderDetails }) {
-  const { t } = useTranslation();
+export default async function OrderStatus({ orderDetails }) {
+  const t = await getTranslations();
   return (
     <>
       {orderDetails?.status === "canceled" ? (

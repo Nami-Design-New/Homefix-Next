@@ -11,7 +11,7 @@ export function generateStaticParams() {
 
 export default async function page({ searchParams }) {
   const t = await getTranslations();
-  const type = searchParams.type ?? "current";
+  const type = (await searchParams).type ?? "current";
 
   return (
     <div className="orders-container">

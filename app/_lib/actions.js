@@ -5,6 +5,7 @@ import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 import { API_URL } from "../_utils/constants";
 import axiosInstance from "./axiosInstance";
+import { getUser } from "../_utils/apiServices/auth";
 
 // auth actions
 //logout Action
@@ -166,6 +167,26 @@ export async function orderServiceAction(payload) {
     return {
       success: false,
       message: "An error occurred while ordering service.",
+    };
+  }
+}
+
+export async function changeOfferStatusAction(orderId, payload) {
+  const user = await getUser();
+  try {
+    const response = await axiosInstance.put(
+      `/homefix/${
+        user === "provider" ? "offers-provider" : "offers-client"
+      }/${orderId}`,
+      payload
+    );
+    const data = response.data;
+    return data;
+  } catch (e) {
+    console.error("Error while changing order status:", e);
+    return {
+      success: false,
+      message: "An error occurred while changing order status.",
     };
   }
 }
