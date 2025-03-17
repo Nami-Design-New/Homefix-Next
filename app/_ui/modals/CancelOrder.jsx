@@ -1,22 +1,22 @@
 "use client";
+import { changeOrderStatusAction } from "@/app/_lib/actions";
 import { useTranslations } from "next-intl";
+import { useActionState, useState } from "react";
 import { Modal } from "react-bootstrap";
+import { toast } from "sonner";
 import InputField from "../form-elements/InputField";
 import SubmitButton from "../form-elements/SubmitButton";
-import { useActionState, useState } from "react";
-import { changeOrderStatusAction } from "@/app/_lib/actions";
-import { toast } from "sonner";
 
 export default function CancelOrder({ show, setShow, orderId }) {
   const t = useTranslations();
   const [cancelReason, setCancelReason] = useState("");
   const [state, formAction, isPending] = useActionState(
     async (prevState, formData) => {
-      console.log(formData);
       try {
         const res = await changeOrderStatusAction(orderId, {
           status: "canceled",
           cancel_reason: formData.get("cancelReason"),
+          _method: "put",
         });
 
         if (res.code === 200) {

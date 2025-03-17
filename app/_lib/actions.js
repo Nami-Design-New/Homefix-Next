@@ -190,6 +190,37 @@ export async function changeOfferStatusAction(orderId, payload) {
     };
   }
 }
+export async function changeOrderStatusAction(orderId, request) {
+  const user = await getUser();
+  const formData = new FormData();
+
+  for (const key in request) {
+    formData.append(key, request[key]);
+  }
+ 
+
+  try {
+    const response = await axiosInstance.put(
+      `/homefix/${
+        user === "provider" ? "offers-provider" : "offers-client"
+      }/${orderId}`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+    const data = response.data;
+    return data;
+  } catch (e) {
+    console.error("Error while changing order status:", e);
+    return {
+      success: false,
+      message: "An error occurred while changing order status.",
+    };
+  }
+}
 
 // contact us
 export async function sendMessageAction(prevState, queryData) {
