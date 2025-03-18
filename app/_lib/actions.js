@@ -34,7 +34,6 @@ export async function logoutAction() {
 }
 
 //send Code Action
-
 export async function sendCodeAction(formData, type = "register") {
   const t = await getTranslations();
   const { phone, country_code } = formData;
@@ -181,6 +180,9 @@ export async function changeOfferStatusAction(orderId, payload) {
       payload
     );
     const data = response.data;
+    if (data.code === 200) {
+      revalidatePath(`/my-orders/${orderId}`);
+    }
     return data;
   } catch (e) {
     console.error("Error while changing order status:", e);
@@ -197,7 +199,6 @@ export async function changeOrderStatusAction(orderId, request) {
   for (const key in request) {
     formData.append(key, request[key]);
   }
- 
 
   try {
     const response = await axiosInstance.put(
@@ -220,6 +221,53 @@ export async function changeOrderStatusAction(orderId, request) {
       message: "An error occurred while changing order status.",
     };
   }
+}
+
+export async function userReceiptAcceptOrRefuseAction(reqBody, orderId) {
+  const user = await getUser();
+  const res = await axiosInstance.post(
+    `/homefix/${
+      user === "provider" ? "orders-provider" : "orders-client"
+    }/${orderId}`,
+    reqBody,
+    {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    }
+  );
+  if (res?.data?.code === 200) {
+    revalidatePath("my-orders");
+    revalidatePath(`my-orders/${orderId}`);
+  }
+  return res.data;
+}
+
+//rate technical
+
+export async function rateTechnicalAction(reqBody) {
+  const res = await axiosInstance.post("homefix/provider-reviews", reqBody);
+  if (res.data.code === 200) {
+    revalidatePath(`/my-orders/${reqBody.order_id}`);
+  }
+  return res.data;
+}
+// Payment action
+
+export async function paymentAction(paymentType, orderId) {
+  const reqBody = {
+    payment_type: paymentType,
+  };
+  console.log(reqBody);
+
+  const res = await axiosInstance.put(
+    `/homefix/order-payment/${orderId}`,
+    reqBody
+  );
+  if (res?.data?.code === 200) {
+    revalidatePath(`/my-orders/${orderId}`);
+  }
+  return res.data;
 }
 
 // contact us
