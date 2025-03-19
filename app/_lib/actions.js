@@ -3,11 +3,10 @@
 import { getTranslations } from "next-intl/server";
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
-import { API_URL } from "../_utils/constants";
-import axiosInstance from "./axiosInstance";
 import { getUser } from "../_utils/apiServices/auth";
+import axiosInstance from "./axiosInstance";
 
-// auth actions
+// !------------------------ auth actions --------------------------!
 //logout Action
 export async function logoutAction() {
   const cookieStore = await cookies();
@@ -119,7 +118,7 @@ export async function registerUserAction(userData) {
   }
 }
 
-// Notifications Actions
+// !------------------------ Notifications Actions -----------------------------!
 export async function deleteNotificationAction(id) {
   try {
     const cookiesStore = cookies();
@@ -133,7 +132,35 @@ export async function deleteNotificationAction(id) {
   }
 }
 
-// service order actions
+// !------------------------- Profile actions ----------------------------------!
+
+export async function EditProfileAction(payload) {
+  const user = await getUser();
+  const formData = new FormData();
+  for (const key in payload) {
+    if (payload[key] instanceof File) {
+      formData.append(key, payload[key], payload[key].name);
+    } else {
+      formData.append(key, payload[key]);
+    }
+  }
+  const res = await axiosInstance.post(`/auth/users/${user.id}`, formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+  if (res.data.code === 200) {
+    revalidatePath("/edit-profile");
+  }
+  return res.data;
+}
+
+export async function updatePasswordAction(payload) {
+  const res = await axiosInstance.post(`/auth/update-password`, payload);
+  return res.data;
+}
+
+// !------------------------- service order actions ----------------------------!
 
 export async function orderServiceAction(payload) {
   const formData = new FormData();
@@ -243,7 +270,7 @@ export async function userReceiptAcceptOrRefuseAction(reqBody, orderId) {
   return res.data;
 }
 
-//rate technical
+// !---------------------------- rate technical ---------------------------------!
 
 export async function rateTechnicalAction(reqBody) {
   const res = await axiosInstance.post("homefix/provider-reviews", reqBody);
@@ -252,7 +279,7 @@ export async function rateTechnicalAction(reqBody) {
   }
   return res.data;
 }
-// Payment action
+//!------------------------- Payment action -------------------------------------!
 
 export async function paymentAction(paymentType, orderId) {
   const reqBody = {
@@ -270,7 +297,7 @@ export async function paymentAction(paymentType, orderId) {
   return res.data;
 }
 
-// contact us
+// !-------------------------------- contact us ---------------------------------!
 export async function sendMessageAction(prevState, queryData) {
   const t = await getTranslations();
   const name = queryData.get("name");

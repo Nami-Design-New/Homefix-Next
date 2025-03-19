@@ -6,6 +6,10 @@ import { Col, Container, Row } from "react-bootstrap";
 export function generateStaticParams() {
   return [{ locale: "en" }, { locale: "ar" }];
 }
+export async function generateMetadata({ params }) {
+  const { locale } = (await params) || { locale: "en" };
+  return { title: locale === "ar" ? "عن هومفيكس" : "About HomeFix" };
+}
 
 export default async function Page({ params }) {
   const myparams = await params;

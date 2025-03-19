@@ -17,7 +17,15 @@ const SelectField = forwardRef(
           {label} {hint && <span className="hint">{hint}</span>}
         </label>
         <div className="input-wrapper">
-          {icon && <Image fill src={icon} alt="input icon" className="input-icon" />}
+          {icon && (
+            <Image
+              width={20}
+              height={20}
+              src={icon}
+              alt="input icon"
+              className="input-icon"
+            />
+          )}
           <Form.Select ref={ref} {...props} disabled={loading}>
             <option value="" disabled>
               {loading ? loadingText : t("select")}

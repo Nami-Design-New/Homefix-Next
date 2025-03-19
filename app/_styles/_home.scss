@@ -319,10 +319,10 @@
             border-color: var(--second);
             outline: none;
           }
-          &[type="email"] {
-            padding-inline-start: unset;
-            padding-inline-end: 40px;
-          }
+          // &[type="email"] {
+          //   padding-inline-start: unset;
+          //   padding-inline-end: 40px;
+          // }
         }
 
         textarea.form-control {

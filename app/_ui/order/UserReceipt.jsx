@@ -52,7 +52,7 @@ export default function UserReceipt({ orderDetails }) {
 
   return (
     <>
-      {true && (
+      {viewReciept(orderDetails?.status) && (
         <div className="user_receipt">
           <h5>{t("workCost")}</h5>
           <div className="product_list">

@@ -5,7 +5,7 @@ import React from "react";
 export default function BackButton() {
   const router = useRouter();
   return (
-    <button onClick={() => router.push("-1")}>
+    <button onClick={() => router.back()}>
       <i className="fa-regular fa-angle-right"></i>
     </button>
   );
